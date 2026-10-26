@@ -1,4 +1,5 @@
 import {test,after} from 'node:test';import assert from 'node:assert/strict';import {mkdtempSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import {join} from 'node:path';
+delete process.env.PUBLIC_URL;delete process.env.RENDER_EXTERNAL_URL;delete process.env.RAILWAY_PUBLIC_DOMAIN;
 const data=mkdtempSync(join(tmpdir(),'yilu-test-'));process.env.YILU_DATA_DIR=data;const {makeServer}=await import('../server.mjs');const {sqlite}=await import('../modules/runtime.mjs');const server=makeServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;after(async()=>{await new Promise(r=>server.close(r));sqlite.close();rmSync(data,{recursive:true,force:true})});
 async function req(path,d,cookie='',extra={}){const r=await fetch(base+path,{method:d?'POST':'GET',headers:{...(d?{'Content-Type':'application/json',Origin:base}:{}),...(cookie?{Cookie:cookie}:{}),...extra},...(d?{body:JSON.stringify(d)}:{})});const text=await r.text();let body;try{body=JSON.parse(text)}catch{body=text}return {status:r.status,body,cookie:r.headers.get('set-cookie')?.split(';')[0]}}
 let elder,family,manager;
