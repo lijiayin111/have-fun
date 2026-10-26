@@ -1,0 +1,9 @@
+import {DatabaseSync} from 'node:sqlite';
+import {mkdirSync,readdirSync,readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=resolve(fileURLToPath(new URL('..',import.meta.url)));export const dataRoot=resolve(process.env.YILU_DATA_DIR||join(root,'data'));mkdirSync(dataRoot,{recursive:true});mkdirSync(join(dataRoot,'uploads'),{recursive:true});
+export const sqlite=new DatabaseSync(join(dataRoot,'yilu.sqlite'));sqlite.exec('PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;');sqlite.exec('CREATE TABLE IF NOT EXISTS _migrations (name TEXT PRIMARY KEY)');
+for(const file of readdirSync(join(root,'migrations')).filter(f=>f.endsWith('.sql')).sort()){if(sqlite.prepare('SELECT 1 FROM _migrations WHERE name=?').get(file))continue;sqlite.exec('BEGIN');try{sqlite.exec(readFileSync(join(root,'migrations',file),'utf8'));sqlite.prepare('INSERT INTO _migrations(name) VALUES(?)').run(file);sqlite.exec('COMMIT')}catch(e){sqlite.exec('ROLLBACK');throw e}}
+function prepare(sql,args=[]){return{bind(...values){return prepare(sql,values)},async first(){return sqlite.prepare(sql).get(...args)||null},async all(){return{results:sqlite.prepare(sql).all(...args)}},async run(){const result=sqlite.prepare(sql).run(...args);return{meta:{changes:Number(result.changes)}}}}}
+export const env={DB:{prepare,async batch(statements){sqlite.exec('BEGIN');try{const result=[];for(const s of statements)result.push(await s.run());sqlite.exec('COMMIT');return result}catch(e){sqlite.exec('ROLLBACK');throw e}}},BUCKET:{async put(id,bytes){if(!/^[a-f0-9-]{36}$/.test(id))throw new Error('invalid id');writeFileSync(join(dataRoot,'uploads',id),new Uint8Array(bytes))},async get(id){if(!/^[a-f0-9-]{36}$/.test(id))return null;const path=join(dataRoot,'uploads',id);return existsSync(path)?{body:readFileSync(path)}:null}}};
