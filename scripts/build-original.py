@@ -26,4 +26,11 @@ a=s.rindex(marker)
 ext=(root/'public/original/extensions.js').read_text()
 s=s[:a]+ext+'\n'+s[a:]
 (root/'public/original/app.js').write_text(s)
+index=root/'public/index.html'
+html=index.read_text()
+bundle_version=hashlib.sha256(s.encode()).hexdigest()[:12]
+css_version=hashlib.sha256((root/'public/original/additions.css').read_bytes()).hexdigest()[:12]
+html=re.sub(r'/original/app\.js(?:\?v=[a-f0-9]+)?','/original/app.js?v='+bundle_version,html)
+html=re.sub(r'/original/additions\.css(?:\?v=[a-f0-9]+)?','/original/additions.css?v='+css_version,html)
+index.write_text(html)
 print(json.dumps({'original_sha256':hashlib.sha256((root/'public/original/base.js').read_bytes()).hexdigest(),'bundle_bytes':len(s.encode()),'routes':s[s.index('var Vt='):s.index(',Ht=',s.index('var Vt='))].count(':')},ensure_ascii=False))
