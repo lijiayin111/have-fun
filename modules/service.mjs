@@ -38,9 +38,9 @@ export async function POST(r        ){try{
  if(op==='profile'){const name=txt(d.name,30);if(!name)return json({error:'请填写称呼'},400);await run('UPDATE profiles SET name=? WHERE id=?',name,u);return json({ok:true})}
  if(op==='save'){
    if(!d.state||typeof d.state!=='object'||Array.isArray(d.state))return json({error:'数据格式错误'},400);
-   const allowed=['xp','tasks','joined','records','requests','messages','customActivities','shared','meds','profile','medications','appointments','jobApplications','studyProgress','contacts','communityNotes','quizAnswers','intake','checkins','reminderDates','achievements','completedCourses'];
+   const allowed=['xp','tasks','joined','records','requests','messages','customActivities','shared','meds','profile','medications','appointments','jobApplications','studyProgress','contacts','communityNotes','quizAnswers','intake','checkins','reminderDates','achievements','completedCourses','eggHistory','dailyCheckins','companionDaily','safetyChecklist','devices','readTopics','activityAttendance','originalStudies','originalMiniapp'];
    const clean    ={};for(const k of allowed)if(k in d.state)clean[k]=d.state[k];
-   for(const k of ['records','joined','requests','messages','customActivities','meds','medications','appointments','jobApplications','contacts','checkins','achievements','completedCourses'])if(k in clean&&(!Array.isArray(clean[k])||clean[k].length>5000))return json({error:'记录格式或数量不符合要求'},400);
+   for(const k of ['records','joined','requests','messages','customActivities','meds','medications','appointments','jobApplications','contacts','checkins','achievements','completedCourses','eggHistory','dailyCheckins','devices','readTopics','activityAttendance','originalStudies'])if(k in clean&&(!Array.isArray(clean[k])||clean[k].length>5000))return json({error:'记录格式或数量不符合要求'},400);
    if(clean.records)for(const r of clean.records){if(!r||typeof r!=='object')return json({error:'健康记录格式无效'},400);for(const k of ['sys','dia','glucose','heart','sleep'])if(r[k]!==undefined&&r[k]!==''&&(typeof r[k]!=='number'||!Number.isFinite(r[k])))return json({error:'健康数值必须为有效数字'},400)}
    const payload=JSON.stringify(clean);if(payload.length>950000)return json({error:'记录空间不足，请导出或精简本机音频后重试。'},413);
    const version=Number(d.version);if(!Number.isSafeInteger(version)||version<0)return json({error:'版本无效'},400);
