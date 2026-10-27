@@ -3,3 +3,6 @@ node_modules/
 .env*
 *.zip
 *.sqlite*
+
+# Video originals await explicit approval for public distribution
+public/videos/*.mp4

@@ -14,6 +14,10 @@ s=s[:a]+'async function E(e,t=le){return OriginalBridge.healthAnswer(e)}'+s[b:]
 # Replace original synthetic dialect labeling with a device-backed choice, keeping original controls.
 a=s.index('function T(e,t=`mandarin`,n)');b=s.index('var le=',a)
 s=s[:a]+'function T(e,t=`mandarin`,n){return originalSpeak(e,t,n)}'+s[b:]
+s=s.replace('window.speechSynthesis?.cancel()','OriginalBridge.stopSpeaking()')
+# Preserve the original clinic selection UI while saving an actual personal intent.
+s=s.replace('onClick:()=>r(`confirm`)','onClick:()=>{OriginalBridge.recordClinicIntent({department:i.name,hospital:o.name,date:e});r(`confirm`)}')
+s=s.replace('预约成功！','就医意向已保存').replace('请按时前往就诊','请先向医院确认').replace('预约成功，请按时就诊','就医意向已保存，请先向医院确认实际安排').replace('余号充足','原版示例时段')
 # Experience comes from unique activity participation and accumulates in the same state.
 s=s.replace('registeredActivities:[...t.registeredActivities,e]','registeredActivities:[...t.registeredActivities,e],petXp:(t.petXp||0)+20',1)
 s=s.replace('function Jt(){return', 'function Jt(){return',1)

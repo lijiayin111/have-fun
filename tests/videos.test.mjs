@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {videoCatalog} from '../modules/videos.mjs';
+test('all twenty videos are grouped into the five matching service modules',()=>{const items=videoCatalog();assert.equal(items.length,20);for(const category of ['健康守护','生活照护','银龄成长','社会参与','生命关怀'])assert.equal(items.filter(v=>v.category===category).length,4);assert.equal(new Set(items.map(v=>v.path)).size,20)});
+test('uploaded video bytes are not publicly enabled without explicit publication setting',()=>{const old=process.env.PUBLIC_SERVICE_VIDEOS;delete process.env.PUBLIC_SERVICE_VIDEOS;assert.ok(videoCatalog().every(v=>!v.available));if(old!==undefined)process.env.PUBLIC_SERVICE_VIDEOS=old});
