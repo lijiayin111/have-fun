@@ -9,3 +9,5 @@
 
 @keyframes xiaoyi-greet{0%,18%,42%,100%{transform:translateY(0) rotate(0)}24%{transform:translateY(-16px) rotate(-7deg)}30%{transform:translateY(0) rotate(6deg)}36%{transform:translateY(-9px) rotate(-5deg)}60%,70%{transform:rotate(7deg)}65%,75%{transform:rotate(-7deg)}}
 .original-pet img{animation:xiaoyi-greet 7s ease-in-out infinite;transform-origin:50% 85%}.original-pet:hover img{animation-duration:2s}@media(prefers-reduced-motion:reduce){.original-pet img{animation:none}}
+
+.original-toolbar button{background:#a54733!important;color:#fff!important;text-decoration:none!important;opacity:1;border:1px solid #a54733}.original-toolbar button:hover,.original-toolbar button:focus-visible{background:#843625!important;color:#fff!important;outline:3px solid #d4b896;outline-offset:2px}.original-toolbar>a{display:inline-block;color:#843625!important;background:#fff8f0;border:1px solid #a54733;border-radius:10px;padding:10px 14px;text-decoration:none;margin:4px 0}.original-toolbar small{color:#405c69}
