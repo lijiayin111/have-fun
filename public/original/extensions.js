@@ -35,7 +35,7 @@ function OriginalVideoPage(){const [cat,setCat]=(0,_.useState)('全部');return 
 function OriginalAddedServices(){const n=y();return oh('div',{className:'flex flex-col h-full'},oh(A,{title:'新增服务'}),oh('div',{className:'flex-1 overflow-y-auto'},originalCard('原版以外的新增内容',originalButton('天气与出行',()=>n.navigate('weather')),originalButton('数字宠物小颐',()=>n.navigate('xiaoyi')),originalButton('服务介绍视频',()=>n.navigate('service-videos')),oh('a',{className:'original-button',href:'/platform.html'},'五维资源与转介平台'),oh('small',null,'小花只在五维资源平台中，小程序保留原版“健康问一问”。')),oh(OriginalToolbar)))}
 Vt['independent-account']=OriginalAccount;Vt['weather']=OriginalWeather;Vt['xiaoyi']=OriginalPetPage;Vt['service-videos']=OriginalVideoPage;Vt['added-services']=OriginalAddedServices;
 const OriginalScreens={...Vt};
-for(const name of ['profile','community-home','companion','learning-center','course-detail','life-education']){const Page=OriginalScreens[name];Vt[name]=function(){return originalAppend(Page(),oh(OriginalToolbar))};}
+for(const name of ['profile','family-home','community-home','companion','learning-center','course-detail','life-education']){const Page=OriginalScreens[name];Vt[name]=function(){return originalAppend(Page(),oh(OriginalToolbar))};}
 // Add weather access after the original home content, preserving all original cards and interactions.
 const OriginalHome=Vt['elderly-home'];Vt['elderly-home']=function(){const n=y();return originalAppend(OriginalHome(),originalCard('新增内容',originalButton('☀️ 天气与出行',()=>n.navigate('weather')),originalButton('🎬 服务介绍视频',()=>n.navigate('service-videos')),oh(OriginalToolbar)))};
 // The source route table remains available for an automated preservation check.
