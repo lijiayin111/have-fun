@@ -23,6 +23,7 @@ s=s.replace('registeredActivities:[...t.registeredActivities,e]','registeredActi
 s=s.replace('function Jt(){return', 'function Jt(){return',1)
 marker='g.createRoot(document.getElementById(`root`))'
 a=s.rindex(marker)
+s=s.replace('来源于社会实践调研项目《社区与机构养老模式下老年人身心健康服务供给研究》','').replace('给妈妈打个电话吧','给女儿打电话').replace('给妈妈打电话吧','给女儿打电话')
 ext=(root/'public/original/extensions.js').read_text()
 s=s[:a]+ext+'\n'+s[a:]
 (root/'public/original/app.js').write_text(s)

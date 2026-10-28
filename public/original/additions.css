@@ -4,3 +4,5 @@
 @media(max-width:600px){.original-stage{padding:0!important;min-height:100dvh!important}.original-phone{width:100%!important;height:100dvh!important;border:0!important;border-radius:0!important;box-shadow:none!important}.original-phone>.original-status,.original-phone>.original-island{display:none!important}.original-pet{bottom:calc(82px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){.original-pet img,.original-pet-page .pet-big>img{animation:none}}
 .original-addon .emergency-call{display:block;background:#d32f2f;color:white;text-align:center;font-size:27px;font-weight:700;padding:24px 14px}.original-video-item{border-bottom:1px solid #e8d5c0;padding:8px 0 15px}.original-video-item:last-child{border-bottom:0}
+
+.original-pet img,.original-pet-page .pet-big>img{scale:-1 1}
