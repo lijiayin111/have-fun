@@ -22,8 +22,8 @@ s=s.replace('预约成功！','就医意向已保存').replace('请按时前往�
 s=s.replace('registeredActivities:[...t.registeredActivities,e]','registeredActivities:[...t.registeredActivities,e],petXp:(t.petXp||0)+20',1)
 s=s.replace('function Jt(){return', 'function Jt(){return',1)
 marker='g.createRoot(document.getElementById(`root`))'
-a=s.rindex(marker)
 s=s.replace('来源于社会实践调研项目《社区与机构养老模式下老年人身心健康服务供给研究》','').replace('给妈妈打个电话吧','给女儿打电话').replace('给妈妈打电话吧','给女儿打电话')
+a=s.rindex(marker)
 ext=(root/'public/original/extensions.js').read_text()
 s=s[:a]+ext+'\n'+s[a:]
 (root/'public/original/app.js').write_text(s)
