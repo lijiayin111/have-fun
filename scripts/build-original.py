@@ -23,9 +23,12 @@ s=s.replace('registeredActivities:[...t.registeredActivities,e]','registeredActi
 s=s.replace('function Jt(){return', 'function Jt(){return',1)
 marker='g.createRoot(document.getElementById(`root`))'
 s=s.replace('来源于社会实践调研项目《社区与机构养老模式下老年人身心健康服务供给研究》','').replace('给妈妈打个电话吧','给女儿打电话').replace('给妈妈打电话吧','给女儿打电话')
+s=s.replace('https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=112&h=112&fit=crop&auto=format','/assets/grandma.svg')
+s=s.replace('zhuxianglao_store_v1','yilu-${new URLSearchParams(location.search).get("mode")||"demo"}-store-v2')
 a=s.rindex(marker)
 ext=(root/'public/original/extensions.js').read_text()
 s=s[:a]+ext+'\n'+s[a:]
+s=s.replace('children:(0,x.jsx)(Jt,{})','children:(0,x.jsx)(OriginalEntry,{})')
 (root/'public/original/app.js').write_text(s)
 index=root/'public/index.html'
 html=index.read_text()
