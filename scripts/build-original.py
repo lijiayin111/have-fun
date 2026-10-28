@@ -25,6 +25,8 @@ marker='g.createRoot(document.getElementById(`root`))'
 s=s.replace('来源于社会实践调研项目《社区与机构养老模式下老年人身心健康服务供给研究》','').replace('给妈妈打个电话吧','给女儿打电话').replace('给妈妈打电话吧','给女儿打电话')
 s=s.replace('https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=112&h=112&fit=crop&auto=format','/assets/grandma.svg')
 s=s.replace('zhuxianglao_store_v1','yilu-${new URLSearchParams(location.search).get("mode")||"demo"}-store-v2')
+s=re.sub(r'https://images\.unsplash\.com/photo-1566616213894-2d4e1baee5d8\?[^`]+','/assets/grandma.svg',s)
+s=s.replace('let e=localStorage.getItem(C);','let e=localStorage.getItem(C);if(!e&&new URLSearchParams(location.search).get("mode")!=="live"){e=localStorage.getItem("zhuxianglao_store_v1");if(e)localStorage.setItem(C,e)}')
 a=s.rindex(marker)
 ext=(root/'public/original/extensions.js').read_text()
 s=s[:a]+ext+'\n'+s[a:]
