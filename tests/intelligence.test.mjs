@@ -1,5 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {handleIntelligence,capabilities} from '../modules/intelligence.mjs';
-const envNames=['DASHSCOPE_API_KEY','DASHSCOPE_WORKSPACE_ID','AI_CHAT_URL','AI_SPEECH_URL'];const saved=Object.fromEntries(envNames.map(k=>[k,process.env[k]]));for(const k of envNames)delete process.env[k];
+const envNames=['DEEPSEEK_API_KEY','DEEPSEEK_MODEL','DASHSCOPE_API_KEY','DASHSCOPE_WORKSPACE_ID','AI_CHAT_URL','AI_SPEECH_URL'];const saved=Object.fromEntries(envNames.map(k=>[k,process.env[k]]));for(const k of envNames)delete process.env[k];
 function request(d,origin='https://yilu.test'){return new Request('https://yilu.test/api/intelligence',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin},body:JSON.stringify(d)})}
 test('intelligence configuration exposes capability flags but no credentials',async()=>{assert.equal(capabilities().chat,false);const r=await handleIntelligence(request({op:'chat',text:'你好',consent:true}),'demo','1');assert.equal(r.status,503);assert.equal((await r.json()).code,'NOT_CONFIGURED')});
 test('cloud features require a signed-in user and same origin',async()=>{assert.equal((await handleIntelligence(request({op:'chat'}),null,'2')).status,401);assert.equal((await handleIntelligence(request({op:'chat'},'https://elsewhere.test'),'demo','2')).status,403)});
